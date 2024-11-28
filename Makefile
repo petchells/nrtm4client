@@ -34,7 +34,7 @@ CHECK_VCS:=scripts/checkvcs.sh
 
 MAKEFLAGS += --silent
 
-.PHONY: build build-linux buildgo checkvcs clean cleanall coverage emptydb install list migrate migrate-production preparetests release rewinddb run test testgo testweb testimage webdev
+.PHONY: build buildweb build-linux buildgo checkvcs clean cleanall coverage emptydb install list migrate migrate-production preparetests release rewinddb run test testgo testweb testimage webdev
 
 defaulttarget: list
 
@@ -46,7 +46,11 @@ web/node_modules: ; cd web && $(NPMCMD) install
 buildgo:
 	cd $(APP_DIR) && $(GOBUILD) -o $(BINARY_NAME_APP) -v
 
-build: buildgo
+buildweb: web/node_modules
+
+
+build: buildgo buildweb
+	cd web && npm run build
 
 build-linux:
 	cd $(APP_DIR) && \
@@ -118,6 +122,7 @@ clean:
 #	-$(DOCKERCMD) image rm $(IMAGE_APP_NAME) >/dev/null 2>&1
 #	-$(DOCKERCMD) rmi $(shell docker images --filter=reference="$(IMAGE_APP_NAME_RELEASE):*" -q) 2>/dev/null
 
-cleanall: clean ;
+cleanall: clean
+	cd web && rm -rf node_modules
 
 uninstall: cleanall ;
