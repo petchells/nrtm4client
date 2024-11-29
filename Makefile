@@ -47,10 +47,9 @@ buildgo:
 	cd $(APP_DIR) && $(GOBUILD) -o $(BINARY_NAME_APP) -v
 
 buildweb: web/node_modules
-
-
-build: buildgo buildweb
 	cd web && npm run build
+
+build: buildgo buildweb ;
 
 build-linux:
 	cd $(APP_DIR) && \
@@ -80,6 +79,9 @@ preparetests: emptytestdb migratetest buildgo
 
 coverage: preparetests
 	sh scripts/coverage.sh
+
+webdev: buildweb
+	cd web && npm run dev
 
 testgo: preparetests
 	$(GOTEST) ./internal/...
