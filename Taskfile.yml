@@ -1,0 +1,57 @@
+version: '3'
+
+vars:
+  FIRST_VAR: "hello"
+  SECOND_VAR: "{{.FIRST_VAR}} world"
+
+tasks:
+
+  buildgo:
+    cmds:
+      - echo {{.SECOND_VAR}}
+      - cd ./cmd/nrtm4client && go build -o nrtm4client -v
+      - cd ./cmd/nrtm4serve && go build -o nrtm4serve -v
+
+  testgo:
+    cmds:
+      - go test ./internal/...
+
+  installweb:
+    precondition: test ! -d node_modules
+    dir: ./web
+    cmds:
+      - npm install --verbose
+
+  buildweb:
+    deps: [installweb]
+    dir: ./web
+    cmds:
+      - npm run build
+
+  testweb:
+    deps: [installweb]
+    dir: ./web
+    cmds:
+      - npm run test
+
+  webdev:
+    deps: [installweb]
+    dir: ./web
+    cmds:
+      - npm run dev
+
+  install:
+    deps: [buildgo, buildweb]
+    silent: true
+
+  test:
+    deps: [testgo, testweb]
+
+  clean:
+    cmds:
+      - rm -rf ./nrtm4client ./nrtm4serve ./web/dist
+
+  cleanall:
+    deps: [clean]
+    cmds:
+      - rm -rf ./web/node_modules

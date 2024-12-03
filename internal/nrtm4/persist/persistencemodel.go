@@ -75,8 +75,8 @@ func (ft NTRMFileType) String() string {
 // ToFileType returns an NRTMFileType which matches s
 func ToFileType(s string) (NTRMFileType, error) {
 	target := strings.ToLower(s)
-	for i, str := range ftstrings {
-		if str == target {
+	for i := range ftstrings {
+		if target == ftstrings[i] {
 			return NTRMFileType(i), nil
 		}
 	}
