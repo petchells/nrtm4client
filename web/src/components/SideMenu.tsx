@@ -23,7 +23,8 @@ const Drawer = styled(MuiDrawer)({
   },
 });
 
-export default function SideMenu() {
+export default function SideMenu(props: { mainItems: any[], secondaryItems: any[], menuItemSelectedIdx: number, onSelected: (idx: number) => void }) {
+
   return (
     <Drawer
       variant="permanent"
@@ -44,7 +45,11 @@ export default function SideMenu() {
         <SelectContent />
       </Box>
       <Divider />
-      <MenuContent />
+      <MenuContent
+        mainItems={props.mainItems}
+        secondaryItems={props.secondaryItems}
+        onSelected={(idx) => props.onSelected(idx)}
+        menuItemSelectedIdx={props.menuItemSelectedIdx} />
       <CardAlert />
       <Stack
         direction="row"

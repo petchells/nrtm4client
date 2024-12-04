@@ -28,12 +28,15 @@ const Toolbar = styled(MuiToolbar)({
   },
 });
 
-export default function AppNavbar() {
+export default function AppNavbar(props: { pageTitle?: string }) {
+
   const [open, setOpen] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
+
+  let pageTitle = props.pageTitle || '';
 
   return (
     <AppBar
@@ -65,7 +68,7 @@ export default function AppNavbar() {
           >
             <CustomIcon />
             <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
-              Dashboard
+              {pageTitle}
             </Typography>
           </Stack>
           <ColorModeIconDropdown />
