@@ -12,7 +12,15 @@
   "dependencies": {
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
+    "@mui/icons-material": "^6.1.9",
     "@mui/material": "^6.1.9",
+    "@mui/x-charts": "^7.23.0",
+    "@mui/x-data-grid": "^7.23.0",
+    "@mui/x-data-grid-pro": "^7.23.0",
+    "@mui/x-date-pickers": "^7.23.0",
+    "@mui/x-date-pickers-pro": "^7.23.0",
+    "@mui/x-tree-view": "^7.23.0",
+    "dayjs": "^1.11.13",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.1"
