@@ -19,12 +19,12 @@ type PostgresRepository struct {
 }
 
 // Initialize implementation of the Repository interface
-func (repo *PostgresRepository) Initialize(dbURL string) error {
+func (repo PostgresRepository) Initialize(dbURL string) error {
 	return db.InitializeConnectionPool(dbURL)
 }
 
 // GetSources returns a list of all sources
-func (repo *PostgresRepository) GetSources() ([]persist.NRTMSource, error) {
+func (repo PostgresRepository) GetSources() ([]persist.NRTMSource, error) {
 	var sources []persist.NRTMSource
 	var err error
 	var pgsources []pgpersist.NRTMSource
@@ -44,7 +44,7 @@ func (repo *PostgresRepository) GetSources() ([]persist.NRTMSource, error) {
 }
 
 // SaveSource updates a source if ID is non-zero, or creates a new one if it is
-func (repo *PostgresRepository) SaveSource(source persist.NRTMSource, notification persist.NotificationJSON) (persist.NRTMSource, error) {
+func (repo PostgresRepository) SaveSource(source persist.NRTMSource, notification persist.NotificationJSON) (persist.NRTMSource, error) {
 	var pgSource pgpersist.NRTMSource
 	err := db.WithTransaction(func(tx pgx.Tx) error {
 		if source.ID == 0 {
@@ -62,12 +62,12 @@ func (repo *PostgresRepository) SaveSource(source persist.NRTMSource, notificati
 }
 
 // Close implementation of the interface. Nothing needed for pg (for now)
-func (repo *PostgresRepository) Close() error {
+func (repo PostgresRepository) Close() error {
 	return nil
 }
 
 // SaveFile saves a reference to an NRTM file
-func (repo *PostgresRepository) SaveFile(nrtmFile *persist.NRTMFile) error {
+func (repo PostgresRepository) SaveFile(nrtmFile *persist.NRTMFile) error {
 	return db.WithTransaction(func(tx pgx.Tx) error {
 		st := pgpersist.NRTMFile{
 			ID:           uint64(db.NextID()),
@@ -84,7 +84,7 @@ func (repo *PostgresRepository) SaveFile(nrtmFile *persist.NRTMFile) error {
 }
 
 // SaveSnapshotObjects saves a list of rpsl object in a go routine
-func (repo *PostgresRepository) SaveSnapshotObjects(
+func (repo PostgresRepository) SaveSnapshotObjects(
 	source persist.NRTMSource,
 	rpslObjects []rpsl.Rpsl,
 	file persist.NrtmFileJSON,
@@ -126,7 +126,7 @@ func (repo *PostgresRepository) SaveSnapshotObjects(
 }
 
 // AddModifyObject updates an RPSL object by setting `to_version` and inserting a new row
-func (repo *PostgresRepository) AddModifyObject(
+func (repo PostgresRepository) AddModifyObject(
 	source persist.NRTMSource,
 	rpsl rpsl.Rpsl,
 	file persist.NrtmFileJSON,
@@ -150,7 +150,7 @@ func (repo *PostgresRepository) AddModifyObject(
 }
 
 // DeleteObject doesn't remove any rows, instead it sets `to_version` to the file version
-func (repo *PostgresRepository) DeleteObject(
+func (repo PostgresRepository) DeleteObject(
 	source persist.NRTMSource,
 	objectType string,
 	primaryKey string,

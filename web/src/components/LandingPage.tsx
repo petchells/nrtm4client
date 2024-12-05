@@ -1,3 +1,4 @@
+import { RouterProvider } from "react-router-dom";
 import type {} from "@mui/x-date-pickers/themeAugmentation";
 import type {} from "@mui/x-charts/themeAugmentation";
 import type {} from "@mui/x-data-grid/themeAugmentation";
@@ -8,7 +9,6 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import AppNavbar from "./widgets/AppNavbar";
 import Header from "./widgets/Header";
-import Sources from "./Sources";
 import SideMenu from "./widgets/SideMenu";
 import AppTheme from "./shared-theme/AppTheme";
 import AnalyticsRoundedIcon from "@mui/icons-material/AnalyticsRounded";
@@ -25,6 +25,8 @@ import {
 
 import { useState } from "react";
 import { FileDownload, QuestionAnswer } from "@mui/icons-material";
+import { router } from "./root";
+import {} from "react-router-dom";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -47,7 +49,6 @@ const secondaryListItems = [
 
 export default function LandingPage(props: { disableCustomTheme?: boolean }) {
   const [menuItemSelectedIdx, setMenuItemSelectedIdx] = useState(0);
-
   return (
     <AppTheme {...props} themeComponents={xThemeComponents}>
       <CssBaseline enableColorScheme />
@@ -55,7 +56,9 @@ export default function LandingPage(props: { disableCustomTheme?: boolean }) {
         <SideMenu
           mainItems={mainListItems}
           secondaryItems={secondaryListItems}
-          onSelected={(idx) => setMenuItemSelectedIdx(idx)}
+          onSelected={(idx) => {
+            setMenuItemSelectedIdx(idx);
+          }}
           menuItemSelectedIdx={menuItemSelectedIdx}
         />
         <AppNavbar pageTitle="Browser" />
@@ -80,7 +83,7 @@ export default function LandingPage(props: { disableCustomTheme?: boolean }) {
             }}
           >
             <Header />
-            <Sources />
+            <RouterProvider router={router} />
           </Stack>
         </Box>
       </Box>
