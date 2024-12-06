@@ -1,4 +1,5 @@
-import { RouterProvider } from "react-router-dom";
+import { useState } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import type {} from "@mui/x-date-pickers/themeAugmentation";
 import type {} from "@mui/x-charts/themeAugmentation";
 import type {} from "@mui/x-data-grid/themeAugmentation";
@@ -16,17 +17,13 @@ import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
 import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import HelpRoundedIcon from "@mui/icons-material/HelpRounded";
+import { FileDownload, QuestionAnswer } from "@mui/icons-material";
 import {
   chartsCustomizations,
   dataGridCustomizations,
   datePickersCustomizations,
   treeViewCustomizations,
 } from "../theme/customizations";
-
-import { useState } from "react";
-import { FileDownload, QuestionAnswer } from "@mui/icons-material";
-import { router } from "./root";
-import {} from "react-router-dom";
 
 const xThemeComponents = {
   ...chartsCustomizations,
@@ -35,9 +32,9 @@ const xThemeComponents = {
   ...treeViewCustomizations,
 };
 const mainListItems = [
-  { text: "Sources", icon: <FileDownload />, href: "/" },
-  { text: "Object queries", icon: <QuestionAnswer />, href: "/queries" },
-  { text: "Dashboard", icon: <AnalyticsRoundedIcon />, href: "/dashboard" },
+  { text: "Sources", icon: <FileDownload />, href: "sources" },
+  { text: "Object queries", icon: <QuestionAnswer />, href: "queries" },
+  { text: "Dashboard", icon: <AnalyticsRoundedIcon />, href: "dashboard" },
   { text: "Tasks", icon: <AssignmentRoundedIcon /> },
 ];
 
@@ -49,6 +46,15 @@ const secondaryListItems = [
 
 export default function LandingPage(props: { disableCustomTheme?: boolean }) {
   const [menuItemSelectedIdx, setMenuItemSelectedIdx] = useState(0);
+  let navigate = useNavigate();
+
+  const navigateToSection = (idx: number) => {
+    setMenuItemSelectedIdx(idx);
+    if (mainListItems[idx].href) {
+      navigate(mainListItems[idx].href);
+    }
+  };
+
   return (
     <AppTheme {...props} themeComponents={xThemeComponents}>
       <CssBaseline enableColorScheme />
@@ -56,9 +62,7 @@ export default function LandingPage(props: { disableCustomTheme?: boolean }) {
         <SideMenu
           mainItems={mainListItems}
           secondaryItems={secondaryListItems}
-          onSelected={(idx) => {
-            setMenuItemSelectedIdx(idx);
-          }}
+          onSelected={(idx) => navigateToSection(idx)}
           menuItemSelectedIdx={menuItemSelectedIdx}
         />
         <AppNavbar pageTitle="Browser" />
@@ -83,7 +87,7 @@ export default function LandingPage(props: { disableCustomTheme?: boolean }) {
             }}
           >
             <Header />
-            <RouterProvider router={router} />
+            <Outlet />
           </Stack>
         </Box>
       </Box>
