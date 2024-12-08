@@ -26,7 +26,7 @@ func Launch(config service.AppConfig, port int, webDir string) {
 		}
 	}()
 	s := rpc.NewServer()
-	s.POSTHandler("/api", rpcHandler.RPCServiceWrapper)
+	s.POSTHandler("/rpc", rpcHandler.RPCServiceWrapper)
 	if len(webDir) > 0 {
 		s.Router().Handle("/", http.FileServer(http.Dir(webDir)))
 	}

@@ -65,7 +65,7 @@ export default function LandingPage(props: { disableCustomTheme?: boolean }) {
           onSelected={(idx) => navigateToSection(idx)}
           menuItemSelectedIdx={menuItemSelectedIdx}
         />
-        <AppNavbar pageTitle="Browser" />
+        <AppNavbar pageTitle={mainListItems[menuItemSelectedIdx].text} />
         {/* Main content */}
         <Box
           component="main"

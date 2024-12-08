@@ -1,7 +1,7 @@
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
-import Breadcrumbs, { breadcrumbsClasses } from '@mui/material/Breadcrumbs';
-import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
+import { styled } from "@mui/material/styles";
+import Typography from "@mui/material/Typography";
+import Breadcrumbs, { breadcrumbsClasses } from "@mui/material/Breadcrumbs";
+import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 
 const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
   margin: theme.spacing(1, 0),
@@ -10,7 +10,7 @@ const StyledBreadcrumbs = styled(Breadcrumbs)(({ theme }) => ({
     margin: 1,
   },
   [`& .${breadcrumbsClasses.ol}`]: {
-    alignItems: 'center',
+    alignItems: "center",
   },
 }));
 
@@ -20,8 +20,11 @@ export default function NavbarBreadcrumbs() {
       aria-label="breadcrumb"
       separator={<NavigateNextRoundedIcon fontSize="small" />}
     >
-      <Typography variant="body1">Browser</Typography>
-      <Typography variant="body1" sx={{ color: 'text.primary', fontWeight: 600 }}>
+      <Typography variant="body1">NRTM4</Typography>
+      <Typography
+        variant="body1"
+        sx={{ color: "text.primary", fontWeight: 600 }}
+      >
         Sources
       </Typography>
     </StyledBreadcrumbs>
