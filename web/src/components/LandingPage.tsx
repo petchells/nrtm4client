@@ -46,6 +46,7 @@ const secondaryListItems = [
 
 export default function LandingPage(props: { disableCustomTheme?: boolean }) {
   const [menuItemSelectedIdx, setMenuItemSelectedIdx] = useState(0);
+
   let navigate = useNavigate();
 
   const navigateToSection = (idx: number) => {
