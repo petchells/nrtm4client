@@ -1,4 +1,4 @@
-export interface Source {
+export type SourceModel = {
   ID: number;
   Source: string;
   SessionID: string;
@@ -6,4 +6,4 @@ export interface Source {
   NotificationURL: string;
   Label: string;
   Created: string;
-}
+};
